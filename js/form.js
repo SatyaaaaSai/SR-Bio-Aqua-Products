@@ -177,3 +177,22 @@ function sendToWhatsApp(event) {
   
 
   
+// Product Enquiry via WhatsApp
+function enquireProduct(productName) {
+    const whatsappNumber = '919959713456';
+    
+    const message = `Hello SR Bio Aqua Products,
+
+I want to know more about this product:
+
+Product Name: ${productName}
+
+Please provide me with more details.
+
+Thank you.`;
+    
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp in new tab
+    window.open(whatsappURL, '_blank');
+}
