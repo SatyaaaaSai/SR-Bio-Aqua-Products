@@ -9,12 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Load and display all reviews
-function loadAndDisplayReviews() {
-    const reviews = getAllReviews();
+async function loadAndDisplayReviews() {
+    const reviews = await getAllReviews();
     displayReviews(reviews);
     updateRatingsSummary(reviews);
 }
-
 // Display reviews in carousel
 function displayReviews(reviews) {
     const carousel = document.getElementById('reviewsCarousel');
@@ -84,8 +83,17 @@ function startAutoSlide() {
 }
 
 // Submit review form
-function submitReview(event) {
+async function submitReview(event) {
     event.preventDefault();
+
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const loader = document.getElementById('btnLoader');
+
+    // 👉 START LOADING
+    submitBtn.disabled = true;
+    btnText.textContent = "Submitting...";
+    loader.classList.remove("hidden");
 
     const name = document.getElementById('reviewName').value.trim();
     const quality = parseInt(document.getElementById('reviewQuality').value);
@@ -93,40 +101,41 @@ function submitReview(event) {
     const delivery = parseInt(document.getElementById('reviewDelivery').value);
     const reviewText = document.getElementById('reviewText').value.trim();
 
-    // Validation
     if (!name || !quality || !quantity || !delivery || !reviewText) {
         showFormStatus('Please fill all fields', 'error');
+
+        // 👉 RESET BUTTON
+        submitBtn.disabled = false;
+        btnText.textContent = "Submit Review";
+        loader.classList.add("hidden");
         return;
     }
 
-    // Create review object
     const newReview = {
-        name: name,
-        quality: quality,
-        quantity: quantity,
-        delivery: delivery,
+        name,
+        quality,
+        quantity,
+        delivery,
         review: reviewText,
         date: new Date().toISOString().split('T')[0]
     };
 
-    // Save review
-    saveReview(newReview);
+    try {
+        await saveReview(newReview);
+        await loadAndDisplayReviews();
 
-    // Reload reviews
-    loadAndDisplayReviews();
+        document.getElementById('reviewForm').reset();
+        showFormStatus('Review submitted successfully!', 'success');
+        
 
-    // Reset carousel
-    currentSlide = 0;
-    document.getElementById('reviewsCarousel').style.transform = 'translateX(0)';
+    } catch (err) {
+        showFormStatus('Something went wrong!', 'error');
+    }
 
-    // Clear form
-    document.getElementById('reviewForm').reset();
-
-    // Show success message
-    showFormStatus('Thank you for your review! It has been submitted successfully.', 'success');
-
-    // Scroll to reviews section
-    document.getElementById('reviews').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // 👉 STOP LOADING
+    submitBtn.disabled = false;
+    btnText.textContent = "Submit Review";
+    loader.classList.add("hidden");
 }
 
 // Show form status message
