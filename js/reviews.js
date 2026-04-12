@@ -1,4 +1,5 @@
 // Default Reviews Data
+const YOUR_SCRIPT_URL="https://script.google.com/macros/s/AKfycbyLYGW4yo17ybGnjmD2qBy0yQpU7wVcOSLj052wrNOGLMfRkDa5yzEipJ3Trc2_cl-7/exec";
 const defaultReviews = [
     {
         name: "Rajesh Kumar",
@@ -35,16 +36,36 @@ const defaultReviews = [
 ];
 
 // Get all reviews (default + user submitted)
-function getAllReviews() {
-    const userReviews = JSON.parse(localStorage.getItem('userReviews') || '[]');
-    return [...defaultReviews, ...userReviews];
+async function getAllReviews() {
+    try {
+        const res = await fetch(YOUR_SCRIPT_URL);
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.error("Error fetching reviews:", err);
+        return defaultReviews;
+    }
 }
 
 // Save user review
-function saveReview(review) {
-    const userReviews = JSON.parse(localStorage.getItem('userReviews') || '[]');
-    userReviews.unshift(review); // Add to beginning
-    localStorage.setItem('userReviews', JSON.stringify(userReviews));
+async function saveReview(review) {
+    try {
+        const formData = new FormData();
+
+        formData.append("name", review.name);
+        formData.append("quality", review.quality);
+        formData.append("quantity", review.quantity);
+        formData.append("delivery", review.delivery);
+        formData.append("review", review.review);
+
+        await fetch(YOUR_SCRIPT_URL, {
+            method: "POST",
+            body: formData
+        });
+
+    } catch (err) {
+        console.error("Error saving review:", err);
+    }
 }
 
 // Calculate average ratings
