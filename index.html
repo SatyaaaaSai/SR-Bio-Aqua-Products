@@ -399,6 +399,107 @@
 
         </div>
     </section>
+     <section class="reviews-section" id="reviews">
+        <div class="container">
+            <div class="section-header">
+                <h2>Customer Reviews</h2>
+                <p>See what our farmers are saying about our products</p>
+            </div>
+
+            <!-- Ratings Summary -->
+            <div class="ratings-summary">
+                <div class="rating-card overall-rating">
+                    <div class="rating-value" id="overallRating">4.5</div>
+                    <div class="rating-stars" id="overallStars">⭐⭐⭐⭐⭐</div>
+                    <div class="rating-label">Overall Rating</div>
+                </div>
+                <div class="rating-card">
+                    <div class="rating-label">Quality</div>
+                    <div class="rating-value" id="qualityRating">4.5</div>
+                    <div class="rating-stars" id="qualityStars">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-card">
+                    <div class="rating-label">Quantity</div>
+                    <div class="rating-value" id="quantityRating">4.5</div>
+                    <div class="rating-stars" id="quantityStars">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-card">
+                    <div class="rating-label">Delivery</div>
+                    <div class="rating-value" id="deliveryRating">4.3</div>
+                    <div class="rating-stars" id="deliveryStars">⭐⭐⭐⭐☆</div>
+                </div>
+            </div>
+
+            <!-- Reviews Carousel -->
+            <div class="reviews-carousel-container">
+                <div class="reviews-carousel" id="reviewsCarousel">
+                    <!-- Reviews will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Submit Review Form -->
+            <div class="review-form-container">
+                <h3>Share Your Experience</h3>
+                <p>Help other farmers by sharing your feedback</p>
+                
+                <form id="reviewForm" onsubmit="submitReview(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reviewName">Your Name *</label>
+                            <input type="text" id="reviewName" placeholder="Enter your name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row rating-inputs">
+                        <div class="form-group">
+                            <label for="reviewQuality">Quality Rating *</label>
+                            <select id="reviewQuality" required>
+                                <option value="">Select</option>
+                                <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                                <option value="4">⭐⭐⭐⭐☆ (4)</option>
+                                <option value="3">⭐⭐⭐☆☆ (3)</option>
+                                <option value="2">⭐⭐☆☆☆ (2)</option>
+                                <option value="1">⭐☆☆☆☆ (1)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reviewQuantity">Quantity Rating *</label>
+                            <select id="reviewQuantity" required>
+                                <option value="">Select</option>
+                                <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                                <option value="4">⭐⭐⭐⭐☆ (4)</option>
+                                <option value="3">⭐⭐⭐☆☆ (3)</option>
+                                <option value="2">⭐⭐☆☆☆ (2)</option>
+                                <option value="1">⭐☆☆☆☆ (1)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reviewDelivery">Delivery Rating *</label>
+                            <select id="reviewDelivery" required>
+                                <option value="">Select</option>
+                                <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                                <option value="4">⭐⭐⭐⭐☆ (4)</option>
+                                <option value="3">⭐⭐⭐☆☆ (3)</option>
+                                <option value="2">⭐⭐☆☆☆ (2)</option>
+                                <option value="1">⭐☆☆☆☆ (1)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reviewText">Your Review *</label>
+                        <textarea id="reviewText" placeholder="Share your experience with our products..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit-review">Submit Review</button>
+                </form>
+
+                <p id="reviewFormStatus" class="review-form-status"></p>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -423,7 +524,8 @@
             </div>
         </div>
     </footer>
-
+    <script src="js/reviews.js"></script>
+    <script src="js/reviews-ui.js"></script>
     <script src="js/form.js"></script>
 </body>
 
