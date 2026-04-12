@@ -493,9 +493,12 @@
                         <textarea id="reviewText" placeholder="Share your experience with our products..." required></textarea>
                     </div>
 
-                    <button type="submit" class="btn-submit-review">Submit Review</button>
+                    <button type="submit" class="btn btn-submit" id="submitBtn">
+                          <span id="btnText">Submit Review</span>
+                          <span id="btnLoader" class="loader hidden"></span>
+                    </button>
                 </form>
-
+                
                 <p id="reviewFormStatus" class="review-form-status"></p>
             </div>
         </div>
